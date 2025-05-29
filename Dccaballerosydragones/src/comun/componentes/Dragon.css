@@ -1,0 +1,16 @@
+.corner-image {
+    position: fixed; /* Fija la imagen en la pantalla */
+    bottom: 0; /* Posición en la parte inferior */
+    left: 0; /* Posición en la esquina izquierda */
+    z-index: 100; /* Asegura que esté por encima de otros elementos si es necesario */
+    margin: 0; /* Elimina cualquier margen */
+    padding: 0; /* Elimina cualquier relleno */
+}
+
+.corner-image img {
+    width: 500px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+    opacity: 1; /* Hace la imagen completamente visible */
+    transition: opacity 0.8s ease; /* Agrega una transición suave al pasar el mouse */
+}
+

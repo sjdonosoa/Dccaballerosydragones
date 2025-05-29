@@ -1,0 +1,43 @@
+/* filepath: /Users/usuario/Desktop/2025-1/Web/Grupo5_front_s2/Dccaballerosydragones/src/comun/components/Navbar.css */
+
+.navbar {
+    position: fixed; /* Fija la barra en la parte superior */
+    top: 0; /* Asegura que esté en la parte superior */
+    left: 0; /* Asegura que comience desde el borde izquierdo */
+    width: 100%; /* Cubre todo el ancho de la pantalla */
+    background-color: #785f49; /* Color de fondo */
+    padding: 0rem; /* Espaciado interno */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Agrega una sombra para destacar */
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center; /* Centra verticalmente el logo */
+}
+.navbar-logo img {
+    height: 50px; /* Ajusta el tamaño del logo */
+    margin-right: 0.1rem; /* Espaciado entre el logo y los enlaces */
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: Center;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    margin:  1rem;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
