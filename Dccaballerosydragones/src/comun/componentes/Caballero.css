@@ -1,0 +1,13 @@
+.caballero-container {
+    position: fixed; /* Fija el caballero en la pantalla */
+    bottom: 20px; /* Posiciona el caballero en la parte inferior */
+    right: 0; /* Posiciona el caballero en el lado derecho */
+    z-index: 100; /* Asegura que esté por encima de otros elementos */
+    margin: 10px; /* Agrega un pequeño margen desde el borde */
+}
+
+.caballero-image {
+    width: 150px; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción de la imagen */
+
+}

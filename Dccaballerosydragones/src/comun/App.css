@@ -52,25 +52,9 @@ h1 {
 }
 
 .card {
-  padding: 2em;
+  padding: 4em;
 }
 
 .read-the-docs {
   color: #888;
-}
-.corner-image {
-  position: fixed; /* Fija la imagen en la pantalla */
-  bottom: 0; /* Posición en la parte inferior */
-  left: 0; /* Posición en la esquina izquierda */
-  z-index: 100; /* Asegura que esté por encima de otros elementos si es necesario */
-  margin: 0; /* Espaciado desde el borde */
-  padding: 0;
-}
-
-
-.corner-image img {
-  width: 500px; /* Ajusta el tamaño de la imagen */
-  height: auto; /* Mantiene la proporción de la imagen */
-  opacity: 1; /* Hace la imagen un poco transparente */
-  transition: opacity 0.8 ease; /* Agrega una transición suave al pasar el mouse */
 }

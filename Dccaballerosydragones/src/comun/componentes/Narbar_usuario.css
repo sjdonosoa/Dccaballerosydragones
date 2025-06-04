@@ -42,3 +42,23 @@
 .navbar a:hover {
     text-decoration: underline;
 }
+
+.navbar-profile {
+    margin-left: auto; /* Empuja el ícono hacia el extremo derecho */
+    display: flex;
+    align-items: center;
+    padding-right: 20px; /* Espaciado desde el borde derecho */
+}
+
+.user-icon {
+    width: 40px; /* Ajusta el tamaño del ícono */
+    height: 40px;
+    border-radius: 50%; /* Hace que el ícono sea circular */
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.user-icon:hover {
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el mouse */
+    opacity: 0.8; /* Reduce la opacidad al pasar el mouse */
+}

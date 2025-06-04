@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '/src/assets/images/logo.png'
+import userIcon from '/src/assets/images/User.png'; // Assuming you have a user icon image
 
 const Navbar = () => {
     return (
@@ -19,9 +20,11 @@ const Navbar = () => {
                 <li>
                     <Link to="/juego">Juego</Link>
                 </li>
-                <li>
-                    <Link to="/iniciar_sesion">Iniciar Sesión </Link>
-                </li>
+                <div className="navbar-profile">
+                <Link to="/perfil">
+                    <img src={userIcon} alt="Perfil" className="user-icon" />
+                </Link>
+            </div>
             </ul>
         </nav>
     );

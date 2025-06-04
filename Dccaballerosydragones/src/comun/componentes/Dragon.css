@@ -1,6 +1,6 @@
 .corner-image {
     position: fixed; /* Fija la imagen en la pantalla */
-    bottom: 0; /* Posición en la parte inferior */
+    bottom: -10px; /* Posición en la parte inferior */
     left: 0; /* Posición en la esquina izquierda */
     z-index: 100; /* Asegura que esté por encima de otros elementos si es necesario */
     margin: 0; /* Elimina cualquier margen */

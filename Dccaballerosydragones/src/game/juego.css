@@ -1,0 +1,35 @@
+.juego-sinusuario {
+    text-align: center;
+    padding: 2rem;
+    color: #333;
+}
+
+.content {
+    margin-top: 5rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #785f49;
+}
+
+p {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+.game-button {
+    position: fixed; /* Fija el botón en la pantalla */
+    top: 85%; /* Posición vertical (ajústalo según sea necesario) */
+    transform: translateY(-50%); /* Centra el botón verticalmente */
+    padding: 10px 20px;
+    background-color: #785f49;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 3rem;
+    font-family: 'shojumaru', sans-serif;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    z-index: 1000; /* Asegura que el botón esté por encima de otros elementos */
+}

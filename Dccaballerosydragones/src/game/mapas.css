@@ -1,0 +1,26 @@
+.mapas {
+    text-align: center;
+    padding: 2rem;
+}
+
+.maps-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.map-button,
+.back-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #785f49;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    border-radius: 8px;
+    cursor: pointer;
+ 
+}
+
