@@ -1,18 +1,18 @@
-import React from 'react';
+
 import './lista_espera.css'; // Archivo CSS para estilos personalizados
 import Navbar_usuario from '../comun/componentes/NavBar_Usuario';
 import { useNavigate } from 'react-router-dom'; // Hook para manejar la navegación
 
 const ListaEspera = () => {
-    const navigate = useNavigate(); // Hook para manejar la navegación
+    const navigate = useNavigate(); 
 
     const handleJoinGame = () => {
         console.log('Unirse a la partida');
-        // Aquí puedes manejar la lógica para unirse a la partida
+        
     };
 
     const handleGoBack = () => {
-        navigate(-1); // Navega a la página anterior
+        navigate(-1); 
     };
 
     return (
