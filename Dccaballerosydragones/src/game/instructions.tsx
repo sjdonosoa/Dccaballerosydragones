@@ -3,7 +3,7 @@ import Navbar from '../comun/componentes/Navbar'
 import Dragon from '../comun/componentes/Dragon'
 import VolverInicio from '../comun/componentes/Volverinicio';
 import { useAuth } from '../comun/AuthContext'; // Importa el contexto de autenticación
-import Navbar_usuario from '../comun/componentes/NavBar_Usuario';
+import Navbar_usuario from '../comun/componentes/Navbar_usuario';
 
 export default function Instructions() {
     const { isAuthenticated } = useAuth();

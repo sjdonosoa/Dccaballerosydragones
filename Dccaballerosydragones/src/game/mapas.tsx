@@ -1,6 +1,6 @@
 import React from 'react';
 import './mapas.css'; // Archivo CSS para estilos personalizados
-import Navbar_usuario from '../comun/componentes/NavBar_Usuario';
+import Navbar_usuario from '../comun/componentes/Navbar_usuario';
 import { Link } from 'react-router-dom'; // Importa Link para manejar la navegación
 import Dragon from '../comun/componentes/Dragon';
 import Caballero from '../comun/componentes/Caballero';

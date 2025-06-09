@@ -8,6 +8,8 @@ import Registrarse from '../profile/registrarse';
 import Juego from '../game/juego';
 import Mapas from '../game/mapas';
 import ListaEspera from '../game/lista_espera';
+import SalaEspera from '../game/sala_espera';
+import Partida from '../game/partida';
 
 
 function Routing() {
@@ -22,6 +24,8 @@ function Routing() {
                     <Route path= 'juego' element ={<Juego/>} />
                     <Route path= '/mapas' element ={<Mapas/>} />
                     <Route path= '/lista_espera' element={<ListaEspera/>} />
+                    <Route path="/sala_espera" element={<SalaEspera />} />
+                    <Route path="/partida" element={<Partida />} />
 
 
                 </Routes>
