@@ -1,28 +1,35 @@
-
-import './lista_espera.css'; // Archivo CSS para estilos personalizados
-import Navbar_usuario from '../comun/componentes/NavBar_Usuario';
-import { useNavigate } from 'react-router-dom'; // Hook para manejar la navegación
+import './lista_espera.css';
+import Navbar_usuario from '../comun/componentes/Navbar_usuario';
+import { useNavigate } from 'react-router-dom';
 
 const ListaEspera = () => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+
+    const handleCreateGame = () => {
+        console.log('Crear nueva partida');
+        navigate('/sala_espera');
+    };
 
     const handleJoinGame = () => {
         console.log('Unirse a la partida');
-        
+        navigate('/sala_espera');
     };
 
     const handleGoBack = () => {
-        navigate(-1); 
+        navigate(-1);
     };
 
     return (
         <div className="lista-espera">
             <Navbar_usuario />
             <h1>Lista de Espera</h1>
-            <p>Esperando a otros jugadores para iniciar la partida...</p>
+            <p>¿Qué deseas hacer?</p>
             <div className="buttons-container">
+                <button onClick={handleCreateGame} className="create-button">
+                    Crear partida
+                </button>
                 <button onClick={handleJoinGame} className="join-button">
-                    Unirme a la partida
+                    Unirme a partida
                 </button>
                 <button onClick={handleGoBack} className="back-button">
                     Volver

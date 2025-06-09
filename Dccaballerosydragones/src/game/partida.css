@@ -1,0 +1,134 @@
+/* Estilos base */
+.partida {
+    font-family: 'Georgia', serif;
+    background-image: url('/tu-imagen-de-fondo.jpg'); /* Opcional */
+    background-color: #f4e3c1;
+    color: #3e2c1c;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Título principal */
+.partida h1 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+/* Mapa del juego */
+.mapa {
+    width: 60%;
+    margin: 0 auto;
+    background-color: #d2b48c;
+    border: 2px solid #8b5e3c;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Panel lateral derecho */
+.informacion-lateral {
+    position: absolute;
+    right: 30px;
+    top: 100px;
+    width: 220px;
+    background-color: #fffaf0;
+    border: 2px solid #8b5e3c;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px #aaa;
+}
+
+.informacion-lateral h3,
+.informacion-lateral h4 {
+    margin-top: 0;
+    font-size: 1.1em;
+}
+
+.informacion-lateral ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.accion-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #cc8b3e;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.accion-btn:hover {
+    background-color: #a96a2e;
+}
+
+/* Panel inferior */
+.panel-inferior {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: #fffaf0;
+    border: 2px solid #8b5e3c;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px -2px 8px #ccc;
+}
+
+.panel-inferior p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.pocimas span {
+    margin: 0 5px;
+    background-color: #e0c48f;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+.poderes .usar-poder {
+    background-color: #7e3f3f;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.poderes .usar-poder:hover {
+    background-color: #5e2d2d;
+}
+
+.acciones-finales {
+    display: flex;
+    gap: 10px;
+}
+
+.tienda, .salir {
+    padding: 6px 12px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tienda:hover {
+    background-color: #666;
+}
+
+.salir:hover {
+    background-color: #b33;
+}

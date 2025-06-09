@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../comun/AuthContext'; 
-import Navbar_usuario from '../comun/componentes/NavBar_Usuario';
+import Navbar_usuario from '../comun/componentes/Navbar_usuario';
 import Navbar from '../comun/componentes/Navbar';
 import Dragon from '../comun/componentes/Dragon';
 import './juego.css'; 
