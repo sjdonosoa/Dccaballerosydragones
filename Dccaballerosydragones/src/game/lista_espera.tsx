@@ -16,7 +16,7 @@ const ListaEspera = () => {
     };
 
     const handleGoBack = () => {
-        navigate(-1);
+        navigate('/mapas');
     };
 
     return (
