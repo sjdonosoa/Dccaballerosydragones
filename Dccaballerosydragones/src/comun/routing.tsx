@@ -10,6 +10,8 @@ import Mapas from '../game/mapas';
 import ListaEspera from '../game/lista_espera';
 import SalaEspera from '../game/sala_espera';
 import Partida from '../game/partida';
+import Ranking from '../game/ranking';
+import FinalPartida from '../game/final_partida';
 
 
 function Routing() {
@@ -26,6 +28,8 @@ function Routing() {
                     <Route path= '/lista_espera' element={<ListaEspera/>} />
                     <Route path="/sala_espera" element={<SalaEspera />} />
                     <Route path="/partida" element={<Partida />} />
+                    <Route path="/ranking" element={<Ranking />} />
+                    <Route path="/final_partida" element={<FinalPartida />} />
 
 
                 </Routes>

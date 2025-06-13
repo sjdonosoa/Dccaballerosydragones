@@ -1,0 +1,67 @@
+.ranking-container {
+    background: url('/ruta/a/tu/fondo.png') no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    color: #4b3621;
+}
+
+.ranking-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #785f49;
+}
+
+.ranking-table {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: rgba(245, 241, 234, 0.95);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ranking-table th,
+.ranking-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #d3c4b5;
+    font-size: 1.2rem;
+}
+
+.ranking-table th {
+    background-color: #a67c52;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ranking-table td {
+    color: #333;
+}
+
+.crown {
+    margin-right: 8px;
+    color: gold;
+}
+
+.ranking-button-container {
+    margin-top: 2rem;
+}
+
+.ranking-back-button {
+    background-color: #785f49;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.ranking-back-button:hover {
+    transform: scale(1.05);
+}
