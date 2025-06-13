@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import './sala_espera.css';
 import Navbar_usuario from '../comun/componentes/Navbar_usuario';
+import Dragon from '../comun/componentes/Dragon';
+import Caballero from '../comun/componentes/Caballero';
 
 const SalaEspera = () => {
     const navigate = useNavigate();
@@ -16,26 +18,26 @@ const SalaEspera = () => {
     return (
         <div className="sala-espera-container">
             <Navbar_usuario />
+            <Dragon />
+            <Caballero />
             <div className="sala-espera-content">
                 <h1 className="sala-espera-title">Sala de Espera</h1>
-                <p className="sala-espera-description">Espacios para jugadores:</p>
+                <p className="sala-espera-description">Jugadores en la sala:</p>
                 
                 <div className="sala-espera-players">
                     {Array(6).fill('').map((_, index) => (
-                        <div key={index} className="player-slot empty">
-                            {`Espacio ${index + 1}`}
+                        <div key={index} className="player-row">
+                            {`Jugador ${index + 1}...`}
                         </div>
                     ))}
-                </div>
-                
-                <div className="sala-espera-buttons">
-                    <button onClick={handleStartGame} className="sala-espera-button start">
+                    <button onClick={handleStartGame} className="start-button">
                         Iniciar partida
                     </button>
-                    <button onClick={handleGoBack} className="sala-espera-button back">
+                    <button onClick={handleGoBack} className="back1-button">
                         Volver
                     </button>
                 </div>
+             
             </div>
         </div>
     );
