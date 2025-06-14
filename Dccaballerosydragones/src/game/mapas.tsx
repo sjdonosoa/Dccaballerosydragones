@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'; // Importa Link para manejar la navegac
 import Dragon from '../comun/componentes/Dragon';
 import Caballero from '../comun/componentes/Caballero';
 import mapa1Img from '../assets/images/mapa1.png';
-import mapa2Img from '../assets/images/mapa2.png';
+import mapa2Img from '../assets/images/Mapa2.png';
 
 const Mapas = () => {
     return (
