@@ -39,7 +39,8 @@ function IniciarSesion() {
 
             // Guardar el token en localStorage
             localStorage.setItem('token', response.data.access_token);
-            
+            // Guardar el usuarioId en localStorage
+            localStorage.setItem('usuarioId', response.data.usuarioId);
             // Redirigir al usuario después del login exitoso
             navigate('/');
 

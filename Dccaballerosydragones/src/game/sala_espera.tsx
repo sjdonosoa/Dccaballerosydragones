@@ -3,12 +3,36 @@ import './sala_espera.css';
 import Navbar_usuario from '../comun/componentes/Navbar_usuario';
 import Dragon from '../comun/componentes/Dragon';
 import Caballero from '../comun/componentes/Caballero';
+import axios from 'axios';
 
 const SalaEspera = () => {
     const navigate = useNavigate();
+    const partidaId = localStorage.getItem('partidaId'); // Asegúrate de guardar esto al crear/unirse
 
-    const handleStartGame = () => {
-        navigate('/partida'); // Redirige a la pantalla de juego
+
+    const handleStartGame = async () => {
+       try {
+            // 1. Verificar si se puede iniciar la partida
+            const puedeIniciarResp = await axios.get(
+                `${import.meta.env.VITE_BACKEND_URL}/listaespera/puede_iniciar`,
+                {
+                    params: { partidaId }, // Ajusta el backend para recibir partidaId
+                }
+            );
+            if (!puedeIniciarResp.data.puedeIniciar) {
+                alert(`No se puede iniciar la partida. Jugadores actuales: ${puedeIniciarResp.data.cantidadJugadores}`);
+                return;
+            }
+
+            // 2. Iniciar la partida
+            await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/partidas/${partidaId}/iniciar`
+            );
+            // 3. Redirigir a la pantalla de juego
+            navigate('/partida');
+        } catch (error) {
+            alert('Error al intentar iniciar la partida');
+        }
     };
 
     const handleGoBack = () => {
