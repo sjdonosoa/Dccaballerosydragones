@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ranking.css';
 import { useAuth } from '../comun/AuthContext';
 import Navbar_usuario from '../comun/componentes/Navbar_usuario';
