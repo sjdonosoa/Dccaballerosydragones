@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './partida.css';
 import { useNavigate } from 'react-router-dom';
 import tiendaImg from '../assets/images/tienda.svg';
@@ -8,7 +8,7 @@ import guardian from '../assets/images/poderes/guardian.svg';
 import maldicion from '../assets/images/poderes/maldicion.svg';
 import muro from '../assets/images/poderes/muro.svg';
 import dragonImg from '../assets/images/dragon.png'; // Importa la imagen del dragón
-
+import axios from 'axios';
 
 
 const Partida = () => {
@@ -16,7 +16,13 @@ const Partida = () => {
     const [mostrarTienda, setMostrarTienda] = useState(false);
     const [mostrarPoderes, setMostrarPoderes] = useState(false);
     const [mostrarDragones, setMostrarDragones] = useState(false);
-
+    const [turno, setTurno] = useState<number | null>(null);
+    const [caballeros, setCaballeros] = useState<{ id: number, nombre: string }[]>([]);
+    const [caballerosSeleccionados, setCaballerosSeleccionados] = useState<number[]>([]);
+    const partidaId = localStorage.getItem('partidaId'); 
+    const [mensaje, setMensaje] = useState<string | null>(null);
+    const [mensajeDragon, setMensajeDragon] = useState<string | null>(null);
+    
     const handleSalir = () => {
         navigate('/');
     };
@@ -37,6 +43,78 @@ const Partida = () => {
 
     const cerrarDragones = () => {
         setMostrarDragones(false);
+    };
+
+    const handleTerminarTurno = async () => {
+        if (!partidaId) {
+            alert('No se encontró el id de la partida');
+            return;
+        }
+        try {
+            const response = await axios.patch(
+                `${import.meta.env.VITE_BACKEND_URL}/partidas/${partidaId}/turno`
+            );
+            setTurno(response.data.turno); 
+            alert(`Turno cambiado. Ahora es el turno ${response.data.turno}`);
+        } catch (error) {
+            alert('Error al cambiar el turno');
+        }
+    };
+
+    const handleComprarPoder = async () => {
+    try {
+        const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/comprar`
+        );
+        setMensaje(response.data.mensaje || '¡Poder comprado exitosamente!');
+        setMensaje(`¡Poder comprado: ${response.data.poder.tipo}!`);
+    } catch (error: any) {
+        if (error.response && error.response.data && error.response.data.error) {
+            setMensaje(error.response.data.error);
+        } else {
+            setMensaje('Error al comprar poder');
+        }
+    }
+    };
+
+    const handleAbrirDragones = async () => {
+        setMostrarDragones(true);
+        try {
+            const response = await axios.get(
+                `${import.meta.env.VITE_BACKEND_URL}/caballeros/turno`,
+                { params: { partidaId } }
+            );
+            setCaballeros(response.data); // Asegúrate que response.data sea un array de caballeros
+        } catch (error) {
+            setCaballeros([]);
+            setMensajeDragon('Error al obtener caballeros');
+        }
+    };
+
+    const toggleCaballero = (id: number) => {
+        setCaballerosSeleccionados(prev =>
+            prev.includes(id)
+                ? prev.filter(cid => cid !== id)
+                : prev.length < 5
+                    ? [...prev, id]
+                    : prev
+        );
+    };
+
+    const handleComprarDragon = async () => {
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/comprardragon`,
+                { caballeros: caballerosSeleccionados }
+            );
+            setMensajeDragon(response.data.mensaje || '¡Has comprado un dragón!');
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                setMensajeDragon(error.response.data.error);
+            } else {
+                setMensajeDragon('Error al comprar dragón');
+            }
+        }
     };
 
 
@@ -103,7 +181,9 @@ const Partida = () => {
                     </div>
 
                     <button className="btn-accion atacar">ATACAR</button>
-                    <button className="btn-accion terminar">TERMINAR TURNO</button>
+                    <button className="btn-accion terminar" onClick={handleTerminarTurno}>
+                    TERMINAR TURNO
+                </button>
                 </div>
             </div>
             <Dragon_chico />
@@ -127,13 +207,51 @@ const Partida = () => {
                 
                 <button className="btn-salir" onClick={handleSalir}>SALIR</button>
                 {mostrarTienda && (
-                <div className="tienda-recuadro">
-                    <h3>Tienda</h3>
-                    <button className="btn-compra" onClick={togglePoderes}>Comprar Poder</button>
-                    <button className="btn-compra" onClick={toggleDragones}>Comprar Dragón</button>
-
-                </div> 
-            )}
+                    <div className="tienda-recuadro">
+                        <h3>Tienda</h3>
+                        <button className="btn-compra" onClick={handleComprarPoder}>
+                            Comprar Poder
+                        </button>
+                        <button className="btn-compra" onClick={handleAbrirDragones}>
+                            Comprar Dragón
+                        </button>
+                        {mostrarDragones && (
+                            <div>
+                                <h4>Selecciona 5 caballeros para sacrificar:</h4>
+                                {caballeros.map(caballero => (
+                                    <label key={caballero.id} style={{ display: 'block', margin: '5px 0' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={caballerosSeleccionados.includes(caballero.id)}
+                                            onChange={() => toggleCaballero(caballero.id)}
+                                            disabled={
+                                                !caballerosSeleccionados.includes(caballero.id) &&
+                                                caballerosSeleccionados.length >= 5
+                                            }
+                                        />
+                                        {caballero.nombre}
+                                    </label>
+                                ))}
+                                <p>Seleccionados: {caballerosSeleccionados.length} / 5</p>
+                                <button
+                                    className="btn-compra"
+                                    onClick={handleComprarDragon}
+                                    disabled={caballerosSeleccionados.length !== 5}
+                                >
+                                    Confirmar compra de Dragón
+                                </button>
+                                <button
+                                    className="btn-cerrar"
+                                    onClick={() => setMostrarDragones(false)}
+                                    style={{ marginLeft: '10px' }}
+                                >
+                                    Cancelar
+                                </button>
+                                {mensajeDragon && <div className="mensaje-dragon">{mensajeDragon}</div>}
+                            </div>
+                        )}
+                    </div>
+                )}
             {mostrarPoderes && (
                 <div className="poderes-recuadro">
                     <h3>Poderes Disponibles</h3>

@@ -20,6 +20,9 @@ const Navbar = () => {
                 <li>
                     <Link to="/juego">Juego</Link>
                 </li>
+                <li>
+                    <Link to="/ranking">Ranking</Link>
+                </li>
                 <div className="navbar-profile">
                 <Link to="/perfil">
                     <img src={userIcon} alt="Perfil" className="user-icon" />
