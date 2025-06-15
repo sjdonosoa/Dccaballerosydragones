@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import './registrarse.css'; // Archivo CSS para estilos personalizados
+import './registrarse.css';
 import Navbar from '../comun/componentes/Navbar';
-import Dragon from '../comun/componentes/Dragon'
-import { Link } from 'react-router-dom';
+import Dragon from '../comun/componentes/Dragon';
+import { Link, useNavigate } from 'react-router-dom';
 import VolverInicio from '../comun/componentes/Volverinicio';
+import axios from 'axios';
 
 const Registrarse = () => {
     const [formData, setFormData] = useState({
         nombre: '',
         email: '',
-        contraseña: '',
+        contrasena: '', // Cambiado a "contrasena" para coincidir con el backend
     });
+    
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -20,10 +26,39 @@ const Registrarse = () => {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Datos de registro:', formData);
-        // Aquí puedes manejar el envío de datos, como enviarlos a un servidor
+        setLoading(true);
+        setError('');
+        
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/signup`,
+                {
+                    nombre: formData.nombre,
+                    email: formData.email,
+                    contrasena: formData.contrasena
+                }
+            );
+            
+            // Registro exitoso
+            setSuccess(true);
+            console.log('Registro exitoso:', response.data);
+            
+            // Redirigir al login después de 2 segundos
+            setTimeout(() => {
+                navigate('/iniciar-sesion');
+            }, 2000);
+            
+        } catch (err: any) {
+            if (axios.isAxiosError(err) && err.response) {
+                setError(err.response.data.error || 'Error al registrarse');
+            } else {
+                setError('Error de conexión con el servidor');
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -32,6 +67,14 @@ const Registrarse = () => {
             <Dragon />
             <div className="form-container">
                 <h1>Registrarse</h1>
+                
+                {error && <div className="error-message">{error}</div>}
+                {success && (
+                    <div className="success-message">
+                        ¡Registro exitoso! Redirigiendo al inicio de sesión...
+                    </div>
+                )}
+                
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="nombre">Nombre</label>
@@ -42,6 +85,7 @@ const Registrarse = () => {
                             value={formData.nombre}
                             onChange={handleChange}
                             required
+                            disabled={loading || success}
                         />
                     </div>
                     <div className="form-group">
@@ -53,21 +97,36 @@ const Registrarse = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
+                            disabled={loading || success}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="contraseña">Contraseña</label>
+                        <label htmlFor="contrasena">Contraseña</label>
                         <input
                             type="password"
-                            id="contraseña"
-                            name="contraseña"
-                            value={formData.contraseña}
+                            id="contrasena"
+                            name="contrasena"
+                            value={formData.contrasena}
                             onChange={handleChange}
                             required
+                            disabled={loading || success}
                         />
+                        <small className="password-hint">
+                            La contraseña debe tener entre 8-20 caracteres, al menos una letra y un número
+                        </small>
                     </div>
-                    <button type="submit" className="submit-button">Registrarse</button>
+                    <button 
+                        type="submit" 
+                        className="submit-button"
+                        disabled={loading || success}
+                    >
+                        {loading ? 'Registrando...' : 'Registrarse'}
+                    </button>
                 </form>
+                
+                <p className="login-link">
+                    ¿Ya tienes una cuenta? <Link to="/iniciar-sesion">Inicia sesión aquí</Link>
+                </p>
             </div>
             <VolverInicio />
         </div>

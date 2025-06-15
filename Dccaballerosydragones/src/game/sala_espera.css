@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
+
+.sala-espera-container {
+    font-family: 'Shojumaru', serif; /* Fuente global */
+    width: 800px; 
+    color: #3e2c1c;
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.sala-espera-content {
+    background-color: #8b5e3c; /* Color café */
+    border: 3px solid #5a3921;
+    border-radius: 10px;
+    padding: 20px;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.sala-espera-title {
+    font-size: 2rem;
+    color: #f4e3c1;
+    margin-bottom: 10px;
+}
+
+.sala-espera-description {
+    font-size: 1.2rem;
+    color: #f4e3c1;
+    margin-bottom: 20px;
+}
+
+.sala-espera-players {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.player-row {
+    background-color: #f4e3c1;
+    color: #3e2c1c;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #5a3921;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.sala-espera-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.sala-espera-button {
+    background-color: #8b0000;
+    color: white;
+    padding: 10px 100px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Shojumaru', serif; /* Fuente actualizada */
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.start-button {
+    background-color:#5a3921;
+    color: #f4e3c1;
+}
+
+.back1-button {
+    background-color: #5a3921;
+    color: #f4e3c1;
+}
+
+/* Responsive para móviles */
+@media (max-width: 600px) {
+    .sala-espera-players {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .sala-espera-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}

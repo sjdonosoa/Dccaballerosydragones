@@ -1,17 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
+
 .lista-espera {
     text-align: center;
     padding: 2rem;
+    font-family: 'Shojumaru', serif; /* Fuente global */
 }
 
 .lista-espera h1 {
     font-size: 2.5rem;
     color: #785f49;
+    font-family: 'Shojumaru', serif; /* Fuente aplicada */
 }
 
 .lista-espera p {
     font-size: 1.2rem;
     color: #333;
     margin-bottom: 2rem;
+    font-family: 'Shojumaru', serif; /* Fuente aplicada */
 }
 
 .buttons-container {
@@ -20,6 +25,7 @@
     gap: 1.5rem;
 }
 
+.create-button,
 .join-button,
 .back-button {
     padding: 15px 30px;
@@ -30,5 +36,6 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-
+    font-family: 'Shojumaru', serif; /* Fuente aplicada */
+    text-transform: uppercase; /* Opcional: texto en mayúsculas */
 }
