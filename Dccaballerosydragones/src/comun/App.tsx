@@ -5,6 +5,8 @@ import Navbar_usuario from './componentes/Navbar_usuario';
 import Navbar from './componentes/Navbar'
 import Dragon from './componentes/Dragon'
 import Caballero from './componentes/Caballero'
+import Ranking from '../game/ranking';
+import FinalPartida from '../game/final_partida';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,9 +17,7 @@ function App() {
       {isAuthenticated ? <Navbar_usuario /> : <Navbar />}
       <h1>Dccaballeros y dragones</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+
 
       </div>
       <Dragon />
