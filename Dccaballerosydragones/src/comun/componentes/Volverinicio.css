@@ -1,6 +1,7 @@
 .back-button {
     position: fixed; /* Fija el botón en la pantalla */
     top: 90%; /* Posición vertical (ajústalo según sea necesario) */
+    bottom: 20px;;
     right: 20px; /* Posición horizontal desde el lado derecho */
     transform: translateY(-50%); /* Centra el botón verticalmente */
     padding: 10px 20px;
@@ -12,5 +13,5 @@
     font-family: 'shojumaru', sans-serif;
     text-align: center;
     transition: background-color 0.3s ease;
-    z-index: 1000; /* Asegura que el botón esté por encima de otros elementos */
+    z-index: 2000; /* Asegura que el botón esté por encima de otros elementos */
 }

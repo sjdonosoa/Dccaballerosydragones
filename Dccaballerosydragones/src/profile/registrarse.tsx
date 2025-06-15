@@ -125,7 +125,7 @@ const Registrarse = () => {
                 </form>
                 
                 <p className="login-link">
-                    ¿Ya tienes una cuenta? <Link to="/iniciar-sesion">Inicia sesión aquí</Link>
+                    ¿Ya tienes una cuenta? <Link to="/iniciar_sesion">Inicia sesión aquí</Link>
                 </p>
             </div>
             <VolverInicio />
