@@ -2,7 +2,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 10rem;
   text-align: center;
 }
 body {
@@ -19,7 +19,7 @@ body {
 
 h1 {
   font-family: 'shojumaru', sans-serif; /* Cambia 'NombreDeLaFuente' por la fuente deseada */
-  font-size: 5rem; /* Ajusta el tamaño del texto */
+  font-size: 10rem; /* Ajusta el tamaño del texto */
   color: #333; /* Cambia el color si es necesario */
 }
 

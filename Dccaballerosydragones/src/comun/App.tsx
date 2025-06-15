@@ -17,9 +17,7 @@ function App() {
       {isAuthenticated ? <Navbar_usuario /> : <Navbar />}
       <h1>Dccaballeros y dragones</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+
 
       </div>
       <Dragon />
