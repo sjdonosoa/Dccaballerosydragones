@@ -93,7 +93,6 @@ const Partida = () => {
                         </div>
                         <div className="bonificacion-item">
                             <span>9 TERRITORIOS</span>
-                            <span>      </span>
                             <span>5 PUNTOS</span>
                         </div>
                         <div className="bonificacion-item">
