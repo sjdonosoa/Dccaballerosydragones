@@ -5,6 +5,7 @@ import Dragon from '../comun/componentes/Dragon';
 import { Link, useNavigate } from 'react-router-dom';
 import VolverInicio from '../comun/componentes/Volverinicio';
 import axios from 'axios';
+import { useAuth } from '../comun/AuthContext';
 
 function IniciarSesion() {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function IniciarSesion() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -41,6 +43,8 @@ function IniciarSesion() {
             localStorage.setItem('token', response.data.access_token);
             // Guardar el usuarioId en localStorage
             localStorage.setItem('usuarioId', response.data.usuarioId);
+            // Actualizar el estado de autenticación en el contexto
+            await login(formData.email, formData.contrasena);
             // Redirigir al usuario después del login exitoso
             navigate('/');
 

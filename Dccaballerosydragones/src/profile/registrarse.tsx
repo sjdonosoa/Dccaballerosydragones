@@ -5,6 +5,7 @@ import Dragon from '../comun/componentes/Dragon';
 import { Link, useNavigate } from 'react-router-dom';
 import VolverInicio from '../comun/componentes/Volverinicio';
 import axios from 'axios';
+import { useAuth } from '../comun/AuthContext'; 
 
 const Registrarse = () => {
     const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const Registrarse = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+    const { register } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -44,10 +46,13 @@ const Registrarse = () => {
             // Registro exitoso
             setSuccess(true);
             console.log('Registro exitoso:', response.data);
+
+            // Usa la función register del contexto para actualizar el estado global
+            await register(formData.email, formData.contrasena);
             
             // Redirigir al login después de 2 segundos
             setTimeout(() => {
-                navigate('/iniciar-sesion');
+                navigate('/iniciar_sesion');
             }, 2000);
             
         } catch (err: any) {
