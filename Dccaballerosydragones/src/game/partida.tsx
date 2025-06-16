@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import './partida.css';
 import { useNavigate } from 'react-router-dom';
 import tiendaImg from '../assets/images/tienda.svg';
@@ -16,11 +16,10 @@ const Partida = () => {
     const [mostrarTienda, setMostrarTienda] = useState(false);
     const [mostrarPoderes, setMostrarPoderes] = useState(false);
     const [mostrarDragones, setMostrarDragones] = useState(false);
-    const [turno, setTurno] = useState<number | null>(null);
+    // const [turno, setTurno] = useState<number | null>(null);
     const [caballeros, setCaballeros] = useState<{ id: number, nombre: string }[]>([]);
     const [caballerosSeleccionados, setCaballerosSeleccionados] = useState<number[]>([]);
     const partidaId = localStorage.getItem('partidaId'); 
-    const [mensaje, setMensaje] = useState<string | null>(null);
     const [mensajeDragon, setMensajeDragon] = useState<string | null>(null);
     
     const handleSalir = () => {
@@ -30,16 +29,10 @@ const Partida = () => {
     const toggleTienda = () => {
         setMostrarTienda(!mostrarTienda); // Alterna el estado de la tienda
     };
-    const togglePoderes = () => {
-        setMostrarPoderes(!mostrarPoderes);
-    };
     const cerrarPoderes = () => {
         setMostrarPoderes(false);
     };
 
-    const toggleDragones = () => {
-        setMostrarDragones(!mostrarDragones);
-    };
 
     const cerrarDragones = () => {
         setMostrarDragones(false);
@@ -54,7 +47,6 @@ const Partida = () => {
             const response = await axios.patch(
                 `${import.meta.env.VITE_BACKEND_URL}/partidas/${partidaId}/turno`
             );
-            setTurno(response.data.turno); 
             alert(`Turno cambiado. Ahora es el turno ${response.data.turno}`);
         } catch (error) {
             alert('Error al cambiar el turno');
@@ -62,21 +54,20 @@ const Partida = () => {
     };
 
     const handleComprarPoder = async () => {
-    try {
-        const response = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/comprar`
-        );
-        setMensaje(response.data.mensaje || '¡Poder comprado exitosamente!');
-        setMensaje(`¡Poder comprado: ${response.data.poder.tipo}!`);
-    } catch (error: any) {
-        if (error.response && error.response.data && error.response.data.error) {
-            setMensaje(error.response.data.error);
-        } else {
-            setMensaje('Error al comprar poder');
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/comprar`
+            );
+            // Aquí podrías mostrar un mensaje con alert o alguna otra forma si lo deseas
+            alert(response.data.mensaje || `¡Poder comprado: ${response.data.poder?.tipo || 'desconocido'}!`);
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                alert(error.response.data.error);
+            } else {
+                alert('Error al comprar poder');
+            }
         }
-    }
     };
-
     const handleAbrirDragones = async () => {
         setMostrarDragones(true);
         try {
