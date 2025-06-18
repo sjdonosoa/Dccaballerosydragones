@@ -21,10 +21,10 @@ const Mapas = () => {
             <Caballero />
             <h1>Elige un mapa</h1>
             <div className="maps-container">
-                <button onClick={() => handleElegirMapa('mapa1')}>
+                <button onClick={() => handleElegirMapa('Mapa 1')}>
                     <img src={mapa1Img} alt="Mapa 1" className="map-image" />
                 </button>
-                <button onClick={() => handleElegirMapa('mapa2')}>
+                <button onClick={() => handleElegirMapa('Mapa 2')}>
                     <img src={mapa2Img} alt="Mapa 2" className="map-image" />
                 </button>
             </div>

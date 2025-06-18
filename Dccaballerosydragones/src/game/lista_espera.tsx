@@ -6,179 +6,149 @@ import { useEffect, useState } from 'react';
 
 const ListaEspera = () => {
     const navigate = useNavigate();
-    const [jugadorId] = useState<string | null>(null);
+    const [jugadorId, setJugadorId] = useState<string | null>(null);
+    const [availableGames, setAvailableGames] = useState<any[]>([]);
+    const [selectedGame, setSelectedGame] = useState<any>(null);
+    const [showGames, setShowGames] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        const inicializarJugador = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            
-            // 1. Obtener información del usuario autenticado
-            const responseUsuario = await axios.get(
-            `${import.meta.env.VITE_BACKEND_URL}/usuarios/me`, 
-            {
-                headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+        const crearJugador = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const usuarioId = localStorage.getItem('usuarioId');
+                if (!usuarioId) {
+                    alert('No se encontró el usuario actual');
+                    return;
                 }
-            }
-            );
-
-            // 2. Crear nuevo jugador asociado al usuario
-            const responseCrear = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/jugadores`,
-            {
-                usuarioId:responseUsuario,
-                puntosObtenidos: 0,
-                ataquesGanados: 0,
-                ataquesPerdidos: 0,
-                colorAsignado: 'rojo'
-            },
-            {
-                headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                
+                if (!localStorage.getItem('jugadorId')) {
+                    const response = await axios.post(
+                        `${import.meta.env.VITE_BACKEND_URL}/jugadores`,
+                        {
+                            colorAsignado: 'rojo',
+                            ataquesGanados: 0,
+                            ataquesPerdidos: 0,
+                            puntosObtenidos: 0,
+                            usuarioId: Number(usuarioId)
+                        },
+                        {
+                            headers: token
+                                ? { Authorization: `Bearer ${token}` }
+                                : undefined,
+                        }
+                    );
+                    localStorage.setItem('jugadorId', response.data.id);
+                    setJugadorId(response.data.id);
+                } else {
+                    setJugadorId(localStorage.getItem('jugadorId'));
                 }
+            } catch (error) {
+                alert('Error al crear el jugador');
             }
-            );
-
-            localStorage.setItem('jugadorId', responseCrear.data.id);
-            return responseCrear.data.id;
-
-        } catch (error) {
-            console.error('Error al inicializar jugador:', error);
-            
-            // Manejo detallado de errores
-            if (axios.isAxiosError(error) && error.response) {
-            if (error.response.status === 401) {
-                alert('Sesión expirada. Por favor inicia sesión nuevamente.');
-                localStorage.clear();
-                navigate('/login');
-            } else {
-                alert(`Error del servidor: ${error.response.data?.message || 'Intente nuevamente'}`);
-            }
-            } else {
-            alert('Error de conexión. Verifica tu internet.');
-            }
-            throw error; // Puedes manejar este error en el componente que llama a esta función
-        }
         };
-
-        inicializarJugador();
+        crearJugador();
     }, []);
 
     const handleCreateGame = async () => {
+        if (!jugadorId) {
+            alert('Jugador no configurado correctamente');
+            return;
+        }
+
         const tipoMapa = localStorage.getItem('tipoMapa');
+        setIsLoading(true);
+        
         try {
             const token = localStorage.getItem('token');
-            
-            if (!token) {
-            alert('No estás autenticado. Por favor inicia sesión.');
-            navigate('/login');
-            return;
-            }
-
-            if (!jugadorId) {
-            alert('No se encontró tu ID de jugador. Intenta recargar la página.');
-            return;
-            }
-
-            if (!tipoMapa) {
-            alert('No se seleccionó tipo de mapa. Vuelve a la pantalla anterior.');
-            return;
-            }
-
-            // Datos completos para la partida
-            const partidaData = {
-            jugadorId: Number(jugadorId), // Asegurar que es número
-            tipoMapa,
-            maxJugadores: 6, // Valor por defecto
-            estado: 'en_espera' // Estado inicial
-            };
-
             const response = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/partidas`,
-            partidaData,
-            {
-                headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-                },
-                timeout: 10000 // 10 segundos de timeout
-            }
+                `${import.meta.env.VITE_BACKEND_URL}/partidas/`,
+                { jugadorId: Number(jugadorId), tipoMapa },
+                {
+                    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+                }
             );
 
-            if (response.data && response.data.partidaId) {
-            localStorage.setItem('partidaId', response.data.partidaId);
-            localStorage.setItem('esCreador', 'true');
+            localStorage.setItem('partidaId', response.data.id);
             navigate('/sala_espera');
-            } else {
-            throw new Error('El servidor no devolvió un ID de partida válido');
-            }
-
-        } catch (error) {
-            console.error('Error al crear partida:', error);
-            
-            if (axios.isAxiosError(error)) {
-            if (error.response) {
-                // Error con respuesta del servidor
-                const errorMsg = error.response.data?.error || 
-                                error.response.data?.detalle || 
-                                'Error al crear partida';
-                
-                alert(`Error: ${errorMsg}`);
-                
-                // Si es error de autenticación, redirigir a login
-                if (error.response.status === 401) {
-                localStorage.removeItem('token');
-                navigate('/login');
-                }
-            } else if (error.request) {
-                // Error de conexión (sin respuesta)
-                alert('No se pudo conectar al servidor. Verifica tu conexión a internet.');
-            } else {
-                // Error en la configuración de la solicitud
-                alert('Error en la configuración de la solicitud');
-            }
-            } else {
-            // Error no relacionado con Axios
-            const errMsg = (error instanceof Error) ? error.message : String(error);
-            alert('Error inesperado: ' + errMsg);
-            }
+        } catch (error: any) {
+            alert(error.response?.data?.error || 'Error al crear la partida');
+        } finally {
+            setIsLoading(false);
         }
-        };
+    };
 
-    const handleJoinGame = async () => {
+    const fetchAvailableGames = async () => {
         const tipoMapa = localStorage.getItem('tipoMapa');
+        setIsLoading(true);
+        setShowGames(true);
+        
         try {
             const token = localStorage.getItem('token');
-            const partidaDisponible = await axios.get(
-                `${import.meta.env.VITE_BACKEND_URL}/partidas/disponible`,
+            const response = await axios.get(
+                `${import.meta.env.VITE_BACKEND_URL}/partidas`,
                 {
                     params: { tipoMapa },
-                    headers: token
-                        ? { Authorization: `Bearer ${token}` }
-                        : undefined,
+                    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
                 }
             );
-            const partidaId = partidaDisponible.data.partidaId;
+            setAvailableGames(response.data);
+        } catch (error) {
+            alert('Error al obtener partidas disponibles');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleJoinGame = async () => {
+        if (!selectedGame) {
+            alert('Por favor selecciona una partida');
+            return;
+        }
+
+        const jugadorId = localStorage.getItem('jugadorId');
+        if (!jugadorId) {
+            alert('No se ha identificado al jugador');
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const token = localStorage.getItem('token');
             await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/partidas/${partidaId}/jugadores/${jugadorId}`,
-                {},
+                // Nueva ruta: partidaId y jugadorId en la URL (no en el body)
+                `${import.meta.env.VITE_BACKEND_URL}/partidas/${Number(selectedGame.id)}/jugadores/${Number(jugadorId)}`,
+                {}, // Body vacío (opcional, si el backend no requiere más datos)
                 {
-                    headers: token
-                        ? { Authorization: `Bearer ${token}` }
-                        : undefined,
+                    headers: token ? { 
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    } : undefined,
                 }
             );
+
+            localStorage.setItem('partidaId', selectedGame.id.toString());
             navigate('/sala_espera');
         } catch (error) {
-            alert('Error al unirse a la partida');
+            console.error('Error al unirse a la partida:', error);
+
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 404) {
+                    alert('La partida o el jugador no existen. Verifica los datos.');
+                } else {
+                    alert(error.response?.data?.error || 'Error al unirse a la partida');
+                }
+            } else {
+                alert('Error desconocido');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleGoBack = () => {
-        navigate('/mapas');
+        navigate('/mapas'); 
     };
 
     return (
@@ -186,17 +156,68 @@ const ListaEspera = () => {
             <Navbar_usuario />
             <h1>Lista de Espera</h1>
             <p>¿Qué deseas hacer?</p>
+            
             <div className="buttons-container">
-                <button onClick={handleCreateGame} className="create-button">
-                    Crear partida
+                <button 
+                    onClick={handleCreateGame} 
+                    className="create-button"
+                    disabled={isLoading && !showGames}
+                >
+                    {isLoading && !showGames ? 'Creando...' : 'Crear partida'}
                 </button>
-                <button onClick={handleJoinGame} className="join-button">
-                    Unirme a partida
+                <button 
+                    onClick={fetchAvailableGames} 
+                    className="join-button"
+                    disabled={isLoading}
+                >
+                    {isLoading && showGames ? 'Cargando...' : 'Unirme a partida'}
                 </button>
-                <button onClick={handleGoBack} className="back-button">
+                <button 
+                    onClick={handleGoBack} 
+                    className="back-button"
+                    disabled={isLoading}
+                >
                     Volver
                 </button>
             </div>
+
+            {showGames && (
+                <div className="games-container">
+                    <h3>Partidas Disponibles</h3>
+                    
+                    {isLoading ? (
+                        <p className="loading-message">Buscando partidas...</p>
+                    ) : availableGames.length === 0 ? (
+                        <p className="loading-message">No hay partidas disponibles</p>
+                    ) : (
+                        <div className="games-list">
+                            {availableGames.map(game => (
+                                <div 
+                                    key={game.id} 
+                                    className={`game-card ${selectedGame?.id === game.id ? 'selected' : ''}`}
+                                    onClick={() => setSelectedGame(game)}
+                                >
+                                    <div className="game-info">
+                                        <h3>Partida #{game.id}</h3>
+                                        <p>Jugadores: {game.listaEspera?.length || 0}</p>
+                                        <p>Mapa: {game.mapa?.tipo || 'Desconocido'}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {availableGames.length > 0 && (
+                        <button 
+                            onClick={handleJoinGame}
+                            className="join-button full-width-button"
+                            disabled={!selectedGame || isLoading}
+                        >
+                            {isLoading ? 'Uniendo...' : 'Unirse a Partida Seleccionada'}
+                        </button>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

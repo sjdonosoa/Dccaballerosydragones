@@ -39,10 +39,14 @@ function IniciarSesion() {
                 }
             );
 
+            if (!response.data.id) {
+                throw new Error('La respuesta del servidor no incluye el ID de usuario');
+            }
+
             // Guardar el token en localStorage
             localStorage.setItem('token', response.data.access_token);
             // Guardar el usuarioId en localStorage
-            localStorage.setItem('usuarioId', response.data.usuarioId);
+            localStorage.setItem('usuarioId', response.data.id);
             // Actualizar el estado de autenticación en el contexto
             await login(formData.email, formData.contrasena);
             // Redirigir al usuario después del login exitoso

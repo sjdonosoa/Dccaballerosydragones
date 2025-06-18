@@ -18,7 +18,7 @@ const Registrarse = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
-    const { register } = useAuth();
+    const { login } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -48,11 +48,11 @@ const Registrarse = () => {
             console.log('Registro exitoso:', response.data);
 
             // Usa la función register del contexto para actualizar el estado global
-            await register(formData.email, formData.contrasena);
+            await login(formData.email, formData.contrasena);
             
             // Redirigir al login después de 2 segundos
             setTimeout(() => {
-                navigate('/iniciar_sesion');
+                navigate('/');
             }, 2000);
             
         } catch (err: any) {

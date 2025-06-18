@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             // Guarda el token en localStorage
             localStorage.setItem('token', response.data.access_token);
-            localStorage.setItem('usuarioId', response.data.usuarioId);
+            localStorage.setItem('usuarioId', response.data.id);
         } catch (error) {
             throw error; // Propaga el error para manejarlo en el componente
         }
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Función para manejar el registro de usuarios
     const register = async (email: string, contrasena: string) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, {
                 email,
                 contrasena,
             });
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
             // Guarda el token en localStorage
             localStorage.setItem('token', response.data.access_token);
-            localStorage.setItem('usuarioId', response.data.usuarioId);
+            localStorage.setItem('usuarioId', response.data.id);
         } catch (error) {
             throw error; // Propaga el error para manejarlo en el componente
         }
