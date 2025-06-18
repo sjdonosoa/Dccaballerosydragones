@@ -7,7 +7,7 @@ import Caballero from '../comun/componentes/Caballero';
 
 const SalaEspera = () => {
     const navigate = useNavigate();
-    const partidaId = localStorage.getItem('partidaId'); // Asegúrate de guardar esto al crear/unirse
+    //const partidaId = localStorage.getItem('partidaId'); // Asegúrate de guardar esto al crear/unirse
 
 
     const handleStartGame = async () => {
